@@ -9,6 +9,7 @@ object Hello {
 
     nums = SortedLine.sortedList(nums)
     nums.foreach(println)
+    println(32 >> 33)
   }
 
 }
