@@ -5,7 +5,6 @@ import com.orchid.scala.utils.SecondarySort
 import org.apache.spark.SparkConf
 import org.apache.spark.api.java.JavaRDD
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.rdd.RDD
 
 object Tuple2Times {
 
@@ -35,6 +34,13 @@ object Tuple2Times {
             .sortByKey()
             .toJavaRDD()
         sorTedRdd.foreach(println)
+
+        val outRdd = sorTedRdd.groupBy(f => f._2.year + f._2.month).map( f => {
+            var temperaturList = List[Int]()
+            f._2.forEach(x => temperaturList = temperaturList :+ x._2.temreture)
+            (f._1, temperaturList)
+        })
+        outRdd.foreach(println)
 
 
 //        val pairWithSortKey = dataJavaRDD
