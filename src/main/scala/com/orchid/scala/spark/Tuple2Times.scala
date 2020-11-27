@@ -1,5 +1,7 @@
 package com.orchid.scala.spark
 
+import java.util
+
 import com.orchid.scala.data.TemperaturData
 import com.orchid.scala.utils.SecondarySort
 import org.apache.spark.SparkConf
@@ -36,8 +38,10 @@ object Tuple2Times {
         sorTedRdd.foreach(println)
 
         val outRdd = sorTedRdd.groupBy(f => f._2.year + f._2.month).map( f => {
-            var temperaturList = List[Int]()
-            f._2.forEach(x => temperaturList = temperaturList :+ x._2.temreture)
+//            var temperaturList = List[Int]()
+//            f._2.forEach(x => temperaturList = temperaturList :+ x._2.temreture)
+            val temperaturList = new util.ArrayList[Int]()
+            f._2.forEach(x => temperaturList.add(x._2.temreture))
             (f._1, temperaturList)
         })
         outRdd.foreach(println)
